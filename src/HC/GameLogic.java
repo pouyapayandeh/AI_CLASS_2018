@@ -2,83 +2,100 @@ package HC;
 
 public class GameLogic {
 
-    public static final int BALL_SPEED = 5,R=10;
-    float width =  400;
-    float height = 400;
-    public GameLogic(int r_x, int r_y, int x, int y) {
-        this.r_x = r_x;
-        this.r_y = r_y;
-        this.x = x;
-        this.y = y;
+
+    double width =  1.0;
+    double height = 1.0;
+    double ballSpeed = width/100 , ballRadius =width/40;
+    int tickCount = 0;
+
+    double rocketV;
+    double rocketX, rocketY, ballX, ballY;
+    double rocketW =width/4,dy= ballSpeed,dx= ballSpeed;
+
+    public GameLogic(double rocketX, double rocketY, double ballX, double ballY) {
+        this.rocketX = rocketX;
+        this.rocketY = rocketY;
+        this.ballX = ballX;
+        this.ballY = ballY;
     }
 
-    public float getR_w() {
-        return r_w/width;
+    public GameLogic(double rocketX, double rocketY, double ballX, double ballY, double rocketW, double dy, double dx)
+    {
+        this.rocketX = rocketX;
+        this.rocketY = rocketY;
+        this.ballX = ballX;
+        this.ballY = ballY;
+        this.rocketW = rocketW;
+        this.dy = dy;
+        this.dx = dx;
+    }
+
+    public double getRocketW() {
+        return rocketW /width;
     }
 
 
-    int rocket_v;
-    int r_x,r_y,x,y;
-    int r_w=100,dy=BALL_SPEED,dx=BALL_SPEED;
 
-    public float getR_x() {
-        return r_x/width;
+
+    public double getRocketX() {
+        return rocketX /width;
     }
 
-    public float getR_y() {
-        return r_y/height;
+    public double getRocketY() {
+        return rocketY /height;
     }
 
-    public float getX() {
-        return x/width;
+    public double getBallX() {
+        return ballX /width;
     }
 
-    public float getY() {
-        return y/height;
+    public double getBallY() {
+        return ballY /height;
     }
 
-    public float getDy() {
+    public double getDy() {
         return dy/height;
     }
 
-    public float getDx() {
+    public double getDx() {
         return dx/width;
     }
-    int tickCount = 0;
+
     int tick()
     {
         tickCount++;
-        if(x + R> width   || x -R< 0)
+        if(ballX + ballRadius > width   || ballX - ballRadius < 0)
         {
             dx *=-1;
         }
-        if( y -R< 0 ||  (x >= r_x && x < (r_x + r_w) && y + R > r_y) )
+        if( ballY - ballRadius < 0 ||
+                (ballX >= rocketX && ballX < (rocketX + rocketW) && ballY + ballRadius > rocketY && ballY < rocketY) )
         {
             dy *=-1;
         }
 
-        x +=dx;
-        y +=dy;
-        r_x +=rocket_v;
+        ballX +=dx;
+        ballY +=dy;
+        rocketX += rocketV;
 
-        if(r_x < 0 )
-            r_x = 0;
-        if(r_x + r_w > width )
-            r_x = (int) (width - r_w);
+        if(rocketX < 0 )
+            rocketX = 0;
+        if(rocketX + rocketW > width )
+            rocketX = (width - rocketW);
 
-        if(y  + R > height)
+        if(ballY + ballRadius > height)
             return tickCount;
 
         return -1;
     }
 
-    public int getRocket_v() {
-        return rocket_v;
+    public double getRocketV() {
+        return rocketV;
     }
 
-    public void setRocket_v(int rocket_v) {
-        this.rocket_v = Math.min(Math.abs(dx),rocket_v);
-        this.rocket_v = Math.max(-Math.abs(dx),this.rocket_v);
+    public void setRocketV(double rocketV) {
+        this.rocketV = Math.min(Math.abs(dx), rocketV);
+        this.rocketV = Math.max(-Math.abs(dx),this.rocketV);
 
 
     }

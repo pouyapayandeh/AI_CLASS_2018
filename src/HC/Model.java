@@ -1,13 +1,13 @@
 package HC;
 
 public class Model {
-    float a[] ;
+    double a[] ;
 
-    public Model(float[] alpha) {
+    public Model(double[] alpha) {
         this.a = alpha;
     }
-    public float execute(float b_x,float b_y,float d_x,float d_y,float h_x)
+    public double execute(double b_x,double b_y,double d_x,double d_y,double h_x)
     {
-        return a[0]*b_x + a[1]*b_y + a[2]*d_x + a[3]*d_y + a[4]*h_x;
+        return a[0]*b_x + a[1]*b_y + a[2]*d_x + a[3]*d_y + a[4]*h_x +a[5];
     }
 }
